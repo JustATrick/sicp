@@ -1,0 +1,57 @@
+Q. Explain 'the good-enough? test used [...] will not be very effective for [...] very small numbers.'
+A. The good-enough? test includes a threshold value: when the difference between the
+   square of our current guess and the radicand is smaller than this threshold it considers
+   the answer good enough. When the radicand is itself smaller than the threshold the test
+   will accept any value which is smaller than the threshold, even though it is far
+   from correct. As the guesses iterate towards the answer from above, the good-enough?
+   test stops the process on the first value that when squared is below the threshold.
+
+Q. Explain 'arithmetic operations are almost always performed with limited precision.
+   This makes our test inadequate for very large numbers.'
+A. With limited precision, when the radicand becomes large enough it will happen that
+   the difference between two machine-representable values which straddle the required
+   answer is larger than the threshold, and so no machine-representable value will
+   satisfy the good-enough? test.
+
+Examples:
+
+mick@gosling:~/sicp/Chapter1$ ./Ex1.7-sqrt-original.scm 0.00000001 9 1e60
+1.0e-8		0.0312501065624275		9.76569160163076e-4
+9		3.00009155413138		9.00054933317044
+1.0e60		^C
+
+Here each line shows a number, its sqrt calculated by the book's code and the square
+of the sqrt. The first line is a small number, smaller than the algorithm's threshold,
+and we see that the calculated value is just smaller than the threshold (1e-3) and
+nearly 10 times bigger than the correct answer (1e-4). The last line is a large number,
+and the ^C in the output shows where I had to interrupt the long-running process which
+I believe would never terminate, thanks to the good-enough? test being too sensitive.
+
+Here's the same output, but for the suggested algorithm with an 'improved' good-enough?
+test:
+
+mick@gosling:~/sicp/Chapter1$ ./Ex1.7-sqrt-improved.scm 0.00000001 9 1e60
+1.0e-8		1.00000000000825e-4		1.00000000001649e-8
+9		3.00000000139698		9.0000000083819
+1.0e60		1.00000000310807e30		1.00000000621615e60
+
+It's clear that the results for large and small values are far better.
+
+Let's not be too smug though, the improved algorithm does struggle with
+trying to take the sqrt of 0:
+
+mick@gosling:~/sicp/Chapter1$ ./Ex1.7-sqrt-improved.scm 0.00000001 9 1e60 0
+1.0e-8		1.00000000000825e-4		1.00000000001649e-8
+9		3.00000000139698		9.0000000083819
+1.0e60		1.00000000310807e30		1.00000000621615e60
+0		^C
+
+It will just go on forever, since the good-enough? test will never find
+a satisfactory value. The original algorithm gives an answer:
+
+mick@gosling:~/sicp/Chapter1$ ./Ex1.7-sqrt-original.scm 0.00000001 9 0
+1.0e-8		0.0312501065624275		9.76569160163076e-4
+9		3.00009155413138		9.00054933317044
+0		0.03125		9.765625e-4
+
+but you'll recognise our old friend the first-value-below-threshold again...
