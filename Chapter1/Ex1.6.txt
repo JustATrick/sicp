@@ -1,0 +1,11 @@
+if is a special form, with a specific evaluation rule. new-if is a regular
+combination and so applicative-order evaluation applies. The first time through
+sqrt-iter, the alternative expression is evaluated, which is a recursive call
+to sqrt-iter. Which in turn calls it again, and again, and again... effectively
+we have an infinite loop, as the predicate won't be evaluated until after
+sqrt-iter has been evaluated infinity times. new-if isn't able to adequately
+control the recursion, as the predicate isn't checked before the next recursion level is started.
+
+On my interpreter, (sqrt 9) aborts with a stack-overflow error.
+
+I'm confused that this result is different from evaluating Ben Bitdiddle's p procedure from Ex1.5, which has the result of simply buzy-looping, seemingly forever. What's the difference between the two types of uncontrolled recursion that causes one to stack-overflow and another to buzy-loop?
