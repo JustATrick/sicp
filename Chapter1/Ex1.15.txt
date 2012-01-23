@@ -1,0 +1,3 @@
+a. 5 times: once for 12.15, then for 4.05, then for 1.35, then for 0.45, then for 0.15.
+
+b. Both space and number of steps grow as \theta(log_3 a)
