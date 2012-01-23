@@ -45,4 +45,4 @@
 
 f(n) = 2n
 g(n) = 2^n
-h(n) = 2^2^2^2.....^2^2^2^2 where 2 appears n times and ^ is left (I think) associative
+h(n) = 2^2^2^2.....^2^2^2^2 where 2 appears n times and ^ is right (I think) associative
