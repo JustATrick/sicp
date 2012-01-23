@@ -1,0 +1,39 @@
+(define r remainder)
+
+Normal-order:
+
+(gcd 206 40)
+(gcd 40 (r 206 40))
+; eval (r 206 40) : 1
+(gcd (r 206 40) (r 40 (r 206 40)))
+; eval (r 206 40), (r 40 6) : 2,3
+(gcd (r 40 (r 206 40)) (r (r 206 40) (r 40 (r 206 40))))
+; eval (r 206, 40), (r 40 6), (r 206 40), (r 6 4) : 4,5,6,7
+(gcd (r (r 206 40) (r 40 (r 206 40))) (r (r 40 (r 206 40)) (r (r 206 40) (r 40 (r 206 40)))))
+; eval (r 206 40), (r 40 6), (r 206 40), (r 6 4), (r 206 40), (r 40 6), (r 4 2) : 8,9,10,11,12,13,14
+(gcd (r (r 206 40) (r 40 (r 206 40))))
+; eval (r 206 40), (r 40 6), (r 206 40), (r 6 4) : 15,16,17,18
+
+Therefore 18 evaluations of (r a b), made up of:
+
+9 x (r 206 40)
+5 x (r 40 6)
+3 x (r 6 4)
+1 x (r 4 2)
+
+Applicative-order:
+
+(gcd 206 40)
+; eval (r 206 40) : 1
+(gcd 40 6)
+; eval (r 40 6)   : 2
+(gcd 6 4)
+; eval (r 6 4)    : 3
+(gcd 4 2)
+; eval (r 4 2)    : 4
+(gcd 2 0)
+2
+
+Therefore only 4 evaluations of (r a b), once each for the
+4 called in the normal-order version.
+
