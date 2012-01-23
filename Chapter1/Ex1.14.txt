@@ -1,0 +1,16 @@
+The following will give a nicely formatted process tree:
+
+dot -Tpng -o Ex1.14.png Ex1.14.dot
+
+I'd shakily suggest that the number of steps grows as \theta(x^n), while the
+space grows as \theta(n).
+
+I arrive at this basically by analogy to the Fibonacci case, and from noticing
+that, ignoring the first-denomination calls, the cc calls basically bifurcate,
+but often (at least at the low end) one of the branches is still-born, leading
+the the "long-tails". Such tails are \theta(n) in number of steps. If there
+were no still-born branches, then the whole thing would be \theta(2^n) in
+number of steps. Reality is somewhere between the two, but I guess we have to
+go with the worst case behaviour of \theta(x^n).
+
+For space I guess a similar shaky argument applies...
