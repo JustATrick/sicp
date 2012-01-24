@@ -9,3 +9,9 @@ control the recursion, as the predicate isn't checked before the next recursion 
 On my interpreter, (sqrt 9) aborts with a stack-overflow error.
 
 I'm confused that this result is different from evaluating Ben Bitdiddle's p procedure from Ex1.5, which has the result of simply buzy-looping, seemingly forever. What's the difference between the two types of uncontrolled recursion that causes one to stack-overflow and another to buzy-loop?
+
+The difference is that Ben's p procedure is tail-recursive (and so consumes only a single stack frame), while this version of sqrt is not, and so stack-usage increases with each iteration.
+
+What makes a procedure tail-recursive? That the final action of the procedure is to return the result of the recursive call. That is true for p, but not this version of sqrt-iter: after the recursive call the procedure must call new-if.
+
+Notice that the original version of sqrt-iter, which uses the special-form if, is tail-recursive: the evaluation rule ensures that the predicate is evaluated first, so that returning the value of the recursive call is the final action of the procedure.
