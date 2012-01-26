@@ -1,0 +1,8 @@
+guile> (smallest-divisor 199)
+199
+guile> (smallest-divisor 1999)
+1999
+guile> (smallest-divisor 19999)
+7
+
+This suggests that 199 and 1999 are prime, while 19999 is not.
