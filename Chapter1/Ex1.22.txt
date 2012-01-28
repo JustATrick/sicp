@@ -1,0 +1,104 @@
+guile> (search-for-primes 1000 1100)
+
+1001
+1003
+1005
+1007
+1009 *** 189.0
+1011
+1013 *** 163.0
+1015
+1017
+1019 *** 181.0
+<snip>
+
+Average time: 178us
+
+guile> (search-for-primes 10000 10040)
+
+10001
+10003
+10005
+10007 *** 461.0
+10009 *** 458.0
+10011
+10013
+10015
+10017
+10019
+10021
+10023
+10025
+10027
+10029
+10031
+10033
+10035
+10037 *** 483.0
+<snip>
+
+Average time: 467us
+
+guile> (search-for-primes 100000 100100)
+
+100001
+100003 *** 1441.0
+100005
+100007
+100009
+100011
+100013
+100015
+100017
+100019 *** 1547.0
+100021
+100023
+100025
+100027
+100029
+100031
+100033
+100035
+100037
+100039
+100041
+100043 *** 1535.25
+<snip>
+
+Average time: 1508us
+
+guile> (search-for-primes 1000000 1000040)
+
+1000001
+1000003 *** 4581.0
+1000005
+1000007
+1000009
+1000011
+1000013
+1000015
+1000017
+1000019
+1000021
+1000023
+1000025
+1000027
+1000029
+1000031
+1000033 *** 4098.75
+1000035
+1000037 *** 5354.0
+
+Average time: 4678us
+
+These timings took a few runs to prepare - I ignored several runs where one or more runs had outliers (both low and high).
+
+Starting from the largest primes (where the effects of start-up etc. will be smallest), we can make a prediction of the runtime of the smaller primes by dividing by sqrt(10).
+
+Prime   Time    Prediction
+10e6   4678us       -
+10e5   1508us     1479us
+10e4    467us      460us
+10e3    178us      145us
+
+So, the prediction looks pretty good over 4 powers of 10. I'd say that's reasonable support for programs running in time proportional to the number of steps on my machine.
