@@ -1,0 +1,53 @@
+After a few warm-ups at each level, and ignoring outliers, the times were
+approximately:
+
+Prime    Time   Ex1.23-Time  Ratio
+10e3    130us         178us    73%
+10e4    330us         467us    71%
+10e5    940us        1508us    62%
+10e6   2850us        4678us    61%
+
+So, it seems that we haven't quite seen the halving of runtime expected, though
+it may well be tending towards that for larger runtimes. I guess that there's a
+start-up time associated with interpreting the process, which is unaffected by
+the change of algorithm.
+
+Let's check with a larger prime: 100000000003 (~10e11)
+
+Time      Ex1.23-Time   Ratio
+~66000us   ~1085000us     61%
+
+Hmm... an even larger prime: 100000000000031 (~10e14)
+
+Time        Ex1.23-Time  Ratio
+~20700000us ~33700000us    61%
+
+Hmm... we don't seem to do better than 61%.
+
+Let me think again... what's different between the two implementations?
+(+ n 1) -> (next n), so as well as halving the number of calls to
+find-divisor this adds a procedure call to next. And each call to next
+adds an if test.
+
+What happens if I compare like with like, and redefine next:
+
+(define (next n)
+  (if (= n 2) (+ n 1) (+ n 1)))
+
+This is identical to the original version, except it incurs the extra cost
+of the procedure call and the if test. How does it run?
+
+~41800000us for the 10e14 prime.
+
+Compared to this, the new version (~20700000us) runs at a ratio of ~50%, so
+that seems to have cleared up that mystery.
+
+So, the procedure call & if test adds ~24% overhead to the original. What if
+I remove the if test, and just run with the cost of the procedure call:
+
+(define (next n)
+  (+ n 1))
+
+Runtime ~38100000us i.e. ~13% increase is due purely to introducing an
+extra procedure call. That leaves an extra ~10% to be added by the if test.
+Interesting...

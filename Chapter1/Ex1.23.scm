@@ -1,0 +1,40 @@
+#! /usr/bin/guile -s
+!#
+; coding: utf-8
+(define (smallest-divisor n)
+  (find-divisor n 2))
+(define (next n)
+  (if (= n 2) 3 (+ n 2)))
+; alternatives used include:
+; (define (next n)
+;    (if (= n 2) (+ n 1) (+ n 1)))
+; and:
+; (define (next n)
+;    (+ n 1))
+(define (find-divisor n test-divisor)
+  (cond ((> (square test-divisor) n) n)
+  ((divides? test-divisor n) test-divisor)
+  (else (find-divisor n (next test-divisor)))))
+(define (divides? a b)
+  (= (remainder b a) 0))
+(define (prime? n)
+  (= n (smallest-divisor n)))
+(define (square n) (* n n))
+
+(use-modules (srfi srfi-19))
+(define (runtime)
+  (let ((time (current-time)))
+    (/ (+ (* 1e9 (time-second time))
+          (time-nanosecond time))
+       1000)))
+
+(define (timed-prime-test n)
+  (newline)
+  (display n)
+  (start-prime-test n (runtime)))
+(define (start-prime-test n start-time)
+  (if (prime? n)
+      (report-prime (- (runtime) start-time))))
+(define (report-prime elapsed-time)
+  (display " *** ")
+  (display elapsed-time))
