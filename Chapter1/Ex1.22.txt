@@ -96,9 +96,9 @@ These timings took a few runs to prepare - I ignored several runs where one or m
 Starting from the largest primes (where the effects of start-up etc. will be smallest), we can make a prediction of the runtime of the smaller primes by dividing by sqrt(10).
 
 Prime   Time    Prediction
-10e6   4678us       -
-10e5   1508us     1479us
-10e4    467us      460us
-10e3    178us      145us
+1e6   4678us       -
+1e5   1508us     1479us
+1e4    467us      460us
+1e3    178us      145us
 
 So, the prediction looks pretty good over 4 powers of 10. I'd say that's reasonable support for programs running in time proportional to the number of steps on my machine.
