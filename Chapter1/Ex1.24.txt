@@ -1,0 +1,29 @@
+After a few warm-ups at each level, and ignoring outliers, the times were
+approximately:
+
+Prime      Time
+1e3    ~6500us
+1e4    ~7400us
+1e5    ~9400us
+1e6   ~11000us
+1e11 ~207000us
+1e14 ~265000us
+
+We would expect the time for 1e6 to be twice that of 1e3, since
+log(1e6)/log(1e3) = log(1e3.1e3)/log(1e3) = 2*log(1e3)/log(1e3) = 2
+log(1en)/log(1em) = n/m
+
+Therefore we can make a prediction from the highest to the lowest:
+
+Prime      Time    Predicted fraction of previous   Prediction
+1e14  ~265000us                   -                     -
+1e11  ~207000us                             11/14     208000us
+1e6    ~11000us                              6/11      11300us
+1e5     ~9400us                               5/6       9460us
+1e4     ~7400us                               4/5       7570us
+1e3     ~6500us                               3/4       5680us
+
+That's a pretty good fit over 10 orders of magnitude, with only
+the lower end starting to struggle. Presumably the discrepancy
+at the bottom end is due to lower order terms in the expansion
+(i.e. constant interpretation costs) becoming significant.
