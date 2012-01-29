@@ -1,7 +1,7 @@
 After a few warm-ups at each level, and ignoring outliers, the times were
 approximately:
 
-Prime   Time   Ex1.23-Time  Ratio
+Prime   Time   Ex1.22-Time  Ratio
 1e3    130us         178us    73%
 1e4    330us         467us    71%
 1e5    940us        1508us    62%
@@ -14,12 +14,12 @@ the change of algorithm.
 
 Let's check with a larger prime: 100000000003 (~1e11)
 
-Time      Ex1.23-Time   Ratio
+Time      Ex1.22-Time   Ratio
 ~66000us   ~1085000us     61%
 
 Hmm... an even larger prime: 100000000000031 (~1e14)
 
-Time        Ex1.23-Time  Ratio
+Time        Ex1.22-Time  Ratio
 ~20700000us ~33700000us    61%
 
 Hmm... we don't seem to do better than 61%.
