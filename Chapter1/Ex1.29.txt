@@ -1,0 +1,23 @@
+guile> (simpson cube 0.0 1.0 100)
+0.25
+guile> (simpson cube 0.0 1.0 1000)
+
+Backtrace:
+In current input:
+  43: 0* [simpson ...
+
+<unnamed port>:43:1: While evaluating arguments to simpson in expression (simpson ln -10.0 ...):
+<unnamed port>:43:1: Stack overflow
+ABORT: (stack-overflow)
+
+Hmm... our recursive definition of sum blows the stack for n = 1000. However,
+the n=100 case looks very accurate.
+
+guile> (simpson cube 0.0 1.0 10)
+0.25
+guile> (simpson cube 0.0 1.0 8)
+0.25
+guile> (simpson cube 0.0 1.0 2)
+0.25
+
+Hmm, even the simplest 3 point integration gives the exact answer. Turns out that Simpson's will give exact answers for any polynomial of degree 3 or less...
