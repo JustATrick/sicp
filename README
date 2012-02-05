@@ -1,0 +1,6 @@
+sicp
+~~~~
+
+A place for my attempts at solutions for the exercises in Structure and Interpretation of Computer Programs by Harold Abelson and Gerald Jay Sussman with Julie Sussman (aka SICP).
+
+I'm using GNU guile as my Scheme interpreter.
