@@ -1,0 +1,3 @@
+Does calling serialized-exchange lead to deadlock? From within a serialized procedure we call another in the same serialization set, and nothing makes progress?
+
+We'd need reentrant serialization to get us out of this?
