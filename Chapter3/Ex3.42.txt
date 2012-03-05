@@ -1,0 +1,2 @@
+Yes, I think this change is safe, and I don't think the concurrency allowances
+differ between the two versions.
