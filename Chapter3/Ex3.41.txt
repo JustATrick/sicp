@@ -1,0 +1,20 @@
+Kind of. In this current implementation I think we're safe. Safety relies on
+two assumptions:
+  
+  - access to a variable to read and write are atomic
+  - the two procedures that access the balance only update the balance once
+
+The former seems pretty safe (I haven't seen a guarantee for very large
+balances (>machine word size), but would be surprised if there wasn't one). The
+latter requires knowledge of all the procedures that access balance. If any
+procedure were changed, or introduced, such that it wrote an invalid
+intermediate balance value, then the unserialised selector could leak that
+invalid value.
+
+Would I be a wuss for including Ben's change, that some might argue is YAGNI?
+Or would relying on the subtle and undocumented relationships between
+procedures that just so happens to be correct be too much clever code, and a
+nightmare for the poor maintenance programmer? I lean towards the latter, and
+so might soften the choice to be either document the cleverness, or include the
+serialisation. In fact, even with the serialisation I'd like to document the
+serialisation policy...
