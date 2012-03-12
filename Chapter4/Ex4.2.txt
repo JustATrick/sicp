@@ -1,0 +1,16 @@
+a.
+
+Louis's plan forgets that prodcedure applications are defined as 'any compound
+expression that is not one of the above expression types': we can only
+recognise an expression as an application AFTER testing for all other
+expressions types. Moving the test for application earlier in the eval
+procedure will only cause expressions which are not procedure applications to
+be erroneously evaluated as such. e.g. (define x 3) will be interpreted as an
+attempt to apply a procedure named define to the value of x and 3, when in fact
+it should be interpreted as a special form.
+
+b.
+
+(define (application? exp) (tagged-list? exp 'call))
+(define (operator exp) (cadr exp))
+(define (operands exp) (cddr exp))
